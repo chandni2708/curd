@@ -1,13 +1,31 @@
 import React from 'react';
+import { useState } from 'react';
+import Modal from './Modal';
 
 function Table(props) {
-    const handleView = (item) => {
-        props.handleView(item);
-    }
-    // const Table = (props) => {
+    const [modalShow , setModalShow] = useState(false);
+    const [viewData , setViewData] = useState([]);
 
+    let myStyle = {
+        margin : "10px",
+    }
+    const handleView = (item) => {
+       setModalShow(true)
+       setViewData(item)
+    }
+    const handleClose = () => {
+        setModalShow(false)
+       
+     }
     return (
         <div className='container'>
+        {modalShow && 
+        <Modal  
+        handleClose = {handleClose}
+            viewData = {viewData}
+
+        />
+        }
             <div className="row mb-3">
                 <div className="col-lg-12">
                     <h1><i class="bi bi-person-lines-fill"></i> Manage User Information</h1>
@@ -25,7 +43,7 @@ function Table(props) {
                                 <th scope="col">Mobile No</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Country</th>
-                                <th scope="col">Hobbies</th>
+                                {/* <th scope="col">Hobbies</th> */}
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -39,12 +57,12 @@ function Table(props) {
                                         <td>{item.mobile}</td>
                                         <td>{item.address}</td>
                                         <td>{item.country}</td>
-                                        <td>{props.userinfo.response}</td>
+                                        {/* <td>{props.userinfo.response}</td> */}
                                         <td className="d-flex justify-content-between">
-                                            <button className="btn btn-info" onClick={() => handleView(item)}>View</button>
-                                            <button className="btn btn-secondary" id="edit" onClick={() => props.handleEdit(index)}>Edit</button>
-                                            <button className="btn btn-danger" onClick={() => props.handleDelete(index)}> Delete</button>
-                                        </td>
+                                            <button className="btn btn-info"   style={myStyle} onClick={() => handleView(item)}>View</button>
+                                            <button className="btn btn-secondary" id="edit"  style={myStyle} onClick={() => props.handleEdit(index)}>Edit</button>
+                                            <button className="btn btn-danger" style={myStyle} onClick={() => props.handleDelete(index)}> Delete</button>
+                                        </td> 
                                     </tr>
                                 )
 
